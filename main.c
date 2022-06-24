@@ -1,8 +1,8 @@
 /*
- * Lab 4 Display characters on the LED pendulum
- * @date: 07.06.2022
- * @author: T.Warnakulnasooriya
- * @date: 23.05.2022
+ * Project-Displaying of 10 characters in a LED pendulum and which takes the input from the
+ * Tera-term software which communicates with the microcontroller via UART and displays it on the fly
+ * author: T.Warnakulnasooriya
+ * date : 15.06.2022
  */
 
 #include "inc/tm4c1294ncpdt.h"
@@ -38,10 +38,10 @@ int main(void)
     int j, i, k;
 
     while (1)
-    {   //printing left -> rigth mit invert
+    {   //printing left -> rigth with invert
 
         if ((toggleLeft) && (toggleInvert))
-        { // detect left turning point
+        { // detect left turning point and invert button 
 
             borderspacing();
             for (j = 0; j < 10; j++)
@@ -65,9 +65,10 @@ int main(void)
 
             borderspacing();
         }
-//        printing left -> rigth ohne invert
+//        printing left -> rigth without invert
         else if (toggleLeft && !(toggleInvert))
-        {
+        {// detect left turning point only
+
             borderspacing();
 
             for (j = 0; j < 10; j++)
@@ -90,7 +91,14 @@ int main(void)
             toggleLeft = false;
             borderspacing();
         }
-
+/*
+The code below is to make the pendulum print for  the right -> left side as well
+but becuase the pendulum is not accurate and it has slightly different time periods
+for the left to right edge and the right to left edge movement, the letters get scrambled 
+and unclear,
+In case you want to  print it in both directions please also change the code in line
+178 to trigger  the interupt in both falling and rising edges.( GPIO_PORTL_IBE_R |= 0x01;)
+*/
 //        else if ((toggleRight) && (toggleInvert))
 //        { // right -> left mit invert
 //            borderspacing();
@@ -166,8 +174,8 @@ void configurePorts()
     GPIO_PORTL_IS_R &= ~(0x01); // edge sensitive
     // or is it ~(0x01)???M(1)?
     GPIO_PORTL_IM_R &= ~0x01;
-    GPIO_PORTL_IBE_R |= 0x01; // when IBE_R is set to a specific pin, doesn't matter on whati sbeing set to that pin in IEV_R
-//    GPIO_PORTL_IEV_R |= 0x01; // sensitive to rising to pl(0)
+    GPIO_PORTL_IBE_R |= 0x00; // when IBE_R is set to a specific pin, doesn't matter on what it is being set to that pin in IEV_R
+    GPIO_PORTL_IEV_R |= 0x01; // sensitive to rising to pl(0)
     GPIO_PORTL_ICR_R |= 0x01;     // clearing at the beginning
     GPIO_PORTL_IM_R |= 0x01;      // unmask interrupt of this pin
     NVIC_EN1_R |= 1 << (53 - 32); // send to nvic interrupt number 53
@@ -257,20 +265,21 @@ void configUart0(void)
 
 }
 void borderspacing(void)
-{
+{// this fucntion is used to give border spacing in the right and left 
+// corners of the LED pendulum. Because the speed is the lowest at the right and left 
+// of a pendulum, the characters will look different in size (streched or compressed)
+//In order to avoid this we try to print the chracters in the middle part of it
     int a = 0;
     for (a = 0; a < 30; a++)
     {
         if (toggleInvert)
         {
             GPIO_PORTM_DATA_R = ~0x00;
-
         }
         else
         {
             GPIO_PORTM_DATA_R = 0x00;
         }
-
         TIMER2_CTL_R |= 0x01;
         while (!(TIMER2_RIS_R & 0x01))
             ;                 // wait for timer event

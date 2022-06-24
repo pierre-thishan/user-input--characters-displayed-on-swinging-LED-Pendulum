@@ -1,13 +1,15 @@
-
 /*
-Bitmap Custom font header file for Microcontroller
-Author : Jared Sanson
-website : https://jared.geek.nz/2014/jan/custom-fonts-for-microcontrollers
-git : https://github.com/jorticus
-
+Bitmap font for a 8-LED display with a placeholder in index 0 for iteration and finding whihc character to print
+*author: Thishan Warnakulasooriya-Original bitmap Editted for easy iteration
+*date : 15.06.2022
+*reference :Jared Sanson,https://github.com/jorticus
 */
-
-// Editing from the original 8x6 bitmap to 8x5 so that it fits the time period of the microcontroller
+/*
+This is a 2D array which consistes the capital letters of the English aplhabet and the decimal number system.
+The char[x][0] is the ASCII code of the corresponding letter which is set so we can iterate through only the char[x][0]
+and find the corresponding bitmap of the chracter we want to print.
+Once we loop through and find it , we only print from char[x][1] to char[x][6]. The char[x][6] is to keep spacing between letters
+*/
 
 const unsigned char font[36][7] = {
 {0x30,0x7E,0x85,0x89,0x91,0x7E,0x00}, // 0
