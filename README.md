@@ -39,6 +39,8 @@ Display the columns of the bitmap of letter ‘B’ one after another as you did
 Proceed with the next letters until you reach the 10th letter - and the right edge of the pendulum.
 
 
+References-HAW Hamburg (https://emil.haw-hamburg.de/pluginfile.php/4911113/mod_resource/content/0/MC_LabAssignment_Session4to6.pdf)
+
 
 
 
