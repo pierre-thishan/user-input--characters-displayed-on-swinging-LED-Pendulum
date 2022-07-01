@@ -1,4 +1,4 @@
-# swinging-led-character-display
+# changeable-character-displayed-on-swinging-LED-Pendulum
 Task-
 Display characters on the LED pendulum which have been typed on the PC.
 When the user types text into the console window, it is sent via UART to the microcontroller which updates the text
