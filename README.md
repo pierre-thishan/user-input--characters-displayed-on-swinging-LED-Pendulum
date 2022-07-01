@@ -10,19 +10,19 @@ When the user types text into the console window, it is sent via UART to the mic
 the LED pendulum “on the fly”. Another interrupt source could be a button which changes the font on the display or the
 background color.
 
-◼ displays characters (0-9, A-Z) on the LED pendulum, which were previously typed into a console window on the PC
+◼ Displays characters (0-9, A-Z) on the LED pendulum, which were previously typed into a console window on the PC
 
-◼ shows on the LED pendulum 10 characters during a swing from left to right (optional: and vice versa)
+◼ Shows on the LED pendulum 10 characters during a swing from left to right (optional: and vice versa)
 
-◼ holds the characters to be displayed in a global array of char and updates the array whenever new values have been
+◼ Holds the characters to be displayed in a global array of char and updates the array whenever new values have been
 received via UART
 
-◼ transmits characters between PC and microcontroller via UART0 at a bitrate and frame format of your choice
+◼ Transmits characters between PC and microcontroller via UART0 at a bitrate and frame format of your choice
 
-◼ uses a push button connected to a GPIO port to toggle between two display formats: red on black or black on red (so
+◼ Uses a push button connected to a GPIO port to toggle between two display formats: red on black or black on red (so
 the push button inverts the colors of the pattern)
 
-◼ is interrupt based, i.e. a UART frame from PC and the push button shall raise interrupts and the update of global
+◼ UART and GPIO interrupts are used, i.e. a UART frame from PC and the push button shall raise interrupts and the update of global
 variables shall be done in interrupt handlers
 
 Further explaned:
