@@ -65,7 +65,7 @@ int main(void)
 
             borderspacing();
         }
-//        printing left -> rigth without invert
+        //printing left -> right without invert
         else if (toggleLeft && !(toggleInvert))
         {// detect left turning point only
 
@@ -172,9 +172,9 @@ void configurePorts()
     // potLInterrupt
 
     GPIO_PORTL_IS_R &= ~(0x01); // edge sensitive
-    // or is it ~(0x01)???M(1)?
-    GPIO_PORTL_IM_R &= ~0x01;
+    GPIO_PORTL_IM_R &= ~0x01; // masking everything before configuring
     GPIO_PORTL_IBE_R |= 0x00; // when IBE_R is set to a specific pin, doesn't matter on what it is being set to that pin in IEV_R
+    // when IBE_R set to 0 the event is handled by the IEV Port
     GPIO_PORTL_IEV_R |= 0x01; // sensitive to rising to pl(0)
     GPIO_PORTL_ICR_R |= 0x01;     // clearing at the beginning
     GPIO_PORTL_IM_R |= 0x01;      // unmask interrupt of this pin
