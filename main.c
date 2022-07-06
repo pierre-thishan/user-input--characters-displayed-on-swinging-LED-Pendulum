@@ -17,6 +17,7 @@
 bool toggleLeft = false;
 bool toggleInvert = false;
 bool toggleRight = false;
+bool DEBUG = false;
 
 void configurePorts();
 void configureTimer();
@@ -96,60 +97,61 @@ The code below is to make the pendulum print for  the right -> left side as well
 but becuase the pendulum is not accurate and it has slightly different time periods
 for the left to right edge and the right to left edge movement, the letters get scrambled 
 and unclear,
-In case you want to  print it in both directions please also change the code in line
-178 to trigger  the interupt in both falling and rising edges.( GPIO_PORTL_IBE_R |= 0x01;)
+In case you want to  print it in both directions in line 20 set DEBUG= true and also change
+the code in line 178 to trigger  the interupt in both falling and rising edges.
+( GPIO_PORTL_IBE_R |= 0x01;)
 */
-//        else if ((toggleRight) && (toggleInvert))
-//        { // right -> left mit invert
-//            borderspacing();
-//            for (j = 9; j >= 0; j--)
-//            {
-//                for (i = 0; i < 36; i++)
-//                {
-//                    if (buffer[j] == font[i][0])
-//                    {
-//                        for (k = 6; k > 0; k--)
-//                        {
-//                            GPIO_PORTM_DATA_R = ~font[i][k];
-//                            TIMER2_CTL_R |= 0x01;
-//                            while (!(TIMER2_RIS_R & 0x01))
-//                                ;                 // wait for timer event
-//                            TIMER2_ICR_R |= 0x01; // clear Timer2A capture event flag
-//                        }
-//                    }
-//                }
-//            }
-//            toggleRight = false;
-//            borderspacing();
-//
-//        }
-//
-//        else if ((toggleRight) && !(toggleInvert))
-//        { // right -> left ohne invert
-//            borderspacing();
-//
-//            for (j = 9; j >= 0; j--)
-//            {
-//                for (i = 0; i < 36; i++)
-//                {
-//
-//                    if (buffer[j] == font[i][0])
-//                    {
-//                        for (k = 6; k > 0; k--)
-//                        {
-//                            GPIO_PORTM_DATA_R = font[i][k];
-//                            TIMER2_CTL_R |= 0x01;
-//                            while (!(TIMER2_RIS_R & 0x01))
-//                                ;                 // wait for timer event
-//                            TIMER2_ICR_R |= 0x01; // clear Timer2A capture event flag
-////                            printf("right and norm \n");
-//                        }
-//                    }
-//                }
-//            }
-//            toggleRight = false;
-//            borderspacing();
-//        }
+       else if ((toggleRight) && (toggleInvert) && DEBUG)
+       { // right -> left mit invert
+           borderspacing();
+           for (j = 9; j >= 0; j--)
+           {
+               for (i = 0; i < 36; i++)
+               {
+                   if (buffer[j] == font[i][0])
+                   {
+                       for (k = 6; k > 0; k--)
+                       {
+                           GPIO_PORTM_DATA_R = ~font[i][k];
+                           TIMER2_CTL_R |= 0x01;
+                           while (!(TIMER2_RIS_R & 0x01))
+                               ;                 // wait for timer event
+                           TIMER2_ICR_R |= 0x01; // clear Timer2A capture event flag
+                       }
+                   }
+               }
+           }
+           toggleRight = false;
+           borderspacing();
+
+       }
+
+       else if ((toggleRight) && !(toggleInvert) && DEBUG)
+       { // right -> left ohne invert
+           borderspacing();
+
+           for (j = 9; j >= 0; j--)
+           {
+               for (i = 0; i < 36; i++)
+               {
+
+                   if (buffer[j] == font[i][0])
+                   {
+                       for (k = 6; k > 0; k--)
+                       {
+                           GPIO_PORTM_DATA_R = font[i][k];
+                           TIMER2_CTL_R |= 0x01;
+                           while (!(TIMER2_RIS_R & 0x01))
+                               ;                 // wait for timer event
+                           TIMER2_ICR_R |= 0x01; // clear Timer2A capture event flag
+//                            printf("right and norm \n");
+                       }
+                   }
+               }
+           }
+           toggleRight = false;
+           borderspacing();
+       }
     }
 }
 
