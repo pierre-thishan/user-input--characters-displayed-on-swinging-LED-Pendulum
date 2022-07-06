@@ -144,7 +144,6 @@ the code in line 178 to trigger  the interupt in both falling and rising edges.
                            while (!(TIMER2_RIS_R & 0x01))
                                ;                 // wait for timer event
                            TIMER2_ICR_R |= 0x01; // clear Timer2A capture event flag
-//                            printf("right and norm \n");
                        }
                    }
                }
@@ -159,15 +158,15 @@ void configurePorts()
 {
     // port M config for swinging LED
     SYSCTL_RCGCGPIO_R |= SYSCTL_RCGCGPIO_R11;
-    while ((SYSCTL_RCGCGPIO_R & SYSCTL_RCGCGPIO_R11) == 0)
-        ;
+    while ((SYSCTL_PRGPIO_R & SYSCTL_RCGCGPIO_R11) == 0)
+        ; // wait for stable clock
     GPIO_PORTM_DEN_R = 0xFF; // enables 8 bits of port M
     GPIO_PORTM_DIR_R = 0xFF; // sets all 8 bits of M as output
 
     // port L
     SYSCTL_RCGCGPIO_R |= SYSCTL_RCGCGPIO_R10;
-    while ((SYSCTL_RCGCGPIO_R & SYSCTL_RCGCGPIO_R10) == 0)
-        ;
+    while ((SYSCTL_PRGPIO_R & SYSCTL_RCGCGPIO_R10) == 0)
+        ; // wait for stable clock
     GPIO_PORTL_DEN_R = 0x03;
     GPIO_PORTL_DIR_R = 0x00;
 
@@ -184,8 +183,8 @@ void configurePorts()
 
     // port K
     SYSCTL_RCGCGPIO_R |= SYSCTL_RCGCGPIO_R9;
-    while ((SYSCTL_RCGCGPIO_R & SYSCTL_RCGCGPIO_R9) == 0)
-        ;                    // busy wait while ready
+    while ((SYSCTL_PRGPIO_R & SYSCTL_RCGCGPIO_R9) == 0)
+        ; // wait for stable clock
     GPIO_PORTK_DEN_R = 0x01; // enable PK(0)
     GPIO_PORTK_DIR_R = 0x00; // input by default
 
@@ -205,13 +204,6 @@ void configurePorts()
     GPIO_PORTA_AHB_DEN_R |= 0x03; // digital I/O enable for pin PA(1:0)
     GPIO_PORTA_AHB_AFSEL_R |= 0x03; // PA(1:0) set to alternate func
     GPIO_PORTA_AHB_PCTL_R |= 0x00000011; // alternate func is U0Rx+Tx
-
-    //port d for debug
-    SYSCTL_RCGCGPIO_R |= SYSCTL_RCGCGPIO_R3;
-    while ((SYSCTL_RCGCGPIO_R & SYSCTL_RCGCGPIO_R3) == 0)
-        ;
-    GPIO_PORTD_AHB_DEN_R = 0xFF; // enables 8 bits of port D
-    GPIO_PORTD_AHB_DIR_R = 0x01; // sets PD(0) bits of D as output
 
 }
 
