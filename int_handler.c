@@ -18,12 +18,12 @@ void IntPortLHandler(void) // IRQ number 53, vector number 69
 
     static int dirState=0;    // dirState=1; when right -> left
                              // dirState 00; when left -> right
-    if (dirState == 0 )
+    if (0 == dirState)
     {
         toggleLeft = true; // set printing dir to left -> right
         dirState = 1;   // set dirState 1 for the next direction for the next interrupt
     }
-    else if (dirState == 1)
+    else if (1 == dirState)
     {
         toggleRight = true; // set printing dir to right -> left
         dirState = 0;    // set dirstate back to 0, for the next interrupt

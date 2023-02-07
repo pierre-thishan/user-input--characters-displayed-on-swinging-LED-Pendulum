@@ -18,12 +18,12 @@ void IntPortKHandler(void)
 
     GPIO_PORTK_ICR_R |= 0x01; // clearing interrFupt flag
 
-    if (toggleInvert == 0 && state == 0)
+    if (0 == toggleInvert && 0 == state)
     {
         toggleInvert = true; // set toggle true 1st time
         state = 1;           // set state to 1
     }
-    else if (toggleInvert == 1 && state == 1)
+    else if (1 == toggleInvert && 1 == state)
     {
         toggleInvert = false; // revert the invert ,clear toggle bit
         state = 0;        // set state back to 0

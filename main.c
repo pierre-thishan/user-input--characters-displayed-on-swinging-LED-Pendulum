@@ -39,7 +39,7 @@ int main(void)
     int j, i, k;
 
     while (1)
-    {   //printing left -> rigth with invert
+    {   //printing left -> right with invert
 
         if ((toggleLeft) && (toggleInvert))
         { // detect left turning point and invert button 
@@ -163,7 +163,7 @@ void configurePorts()
     GPIO_PORTM_DEN_R = 0xFF; // enables 8 bits of port M
     GPIO_PORTM_DIR_R = 0xFF; // sets all 8 bits of M as output
 
-    // port L
+    // port L 
     SYSCTL_RCGCGPIO_R |= SYSCTL_RCGCGPIO_R10;
     while ((SYSCTL_PRGPIO_R & SYSCTL_RCGCGPIO_R10) == 0)
         ; // wait for stable clock
@@ -191,7 +191,7 @@ void configurePorts()
     // port K interrupt
     GPIO_PORTK_IS_R &= ~(0x01);   // edge sensitive
     GPIO_PORTK_IM_R &= ~0x01;     // masking
-    GPIO_PORTK_IBE_R |= 0x00; // when IBE_R is set toa specific pin, doesn't matter on whati sbeing set to that pin in IEV_R
+    GPIO_PORTK_IBE_R |= 0x00;     // when IBE_R is set toa specific pin, doesn't matter on whati sbeing set to that pin in IEV_R
     GPIO_PORTK_IEV_R |= 0x01;     // sensitive to rising to PK(0)
     GPIO_PORTK_ICR_R |= 0x01;     // clearing at the beginning
     GPIO_PORTK_IM_R |= 0x01;      // unmask interrupt of this pin
