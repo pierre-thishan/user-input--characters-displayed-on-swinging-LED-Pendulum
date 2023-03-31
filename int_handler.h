@@ -8,7 +8,7 @@
 #ifndef INT_HANDLER_H_
 #define INT_HANDLER_H_
 #include <stdbool.h>
-
+//check the datsheet tmc1429
 void IntPortLHandler(void);
 void IntPortKHandler(void);
 void IntUART0Handler(void);
